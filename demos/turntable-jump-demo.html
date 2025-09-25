@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>跳一跳转盘</title>
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 100px); /* 4列 */
+        grid-template-rows: repeat(4, 100px); /* 4行 */
+        gap: 10px;
+        width: 450px;
+        height: 450px;
+        margin: 20px auto;
+      }
+      .grid-item {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgray;
+        border: 1px solid #333;
+        font-size: 18px;
+      }
+      .gift {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+      .btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 网格容器 -->
+    <div class="grid-container" id="grid-container">
+      <!-- 中间4个格子为空 -->
+      <div class="grid-item" style="grid-row: 2; grid-column: 2"></div>
+      <div class="grid-item" style="grid-row: 2; grid-column: 3"></div>
+      <div class="grid-item" style="grid-row: 3; grid-column: 2"></div>
+      <div class="grid-item" style="grid-row: 3; grid-column: 3"></div>
+
+      <!-- 外部12个格子放礼物 -->
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+      <div class="grid-item not-empty">
+        <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+      </div>
+    </div>
+
+    <button class="btn" id="startBtn">开始动画</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+      let isSpinning = false // 用来标记转盘是否在转动
+
+      document.getElementById('startBtn').addEventListener('click', function () {
+        if (isSpinning) return // 如果转盘正在转动，阻止点击
+        isSpinning = true // 开始转动
+
+        // 获取所有放有礼物的格子
+        const gridItems = Array.from(document.querySelectorAll('.grid-item.not-empty'))
+
+        // 随机选择8个格子
+        let selectedItems = []
+        while (selectedItems.length < 5) {
+          const randomIndex = Math.floor(Math.random() * gridItems.length)
+          if (!selectedItems.includes(gridItems[randomIndex])) {
+            selectedItems.push(gridItems[randomIndex])
+          }
+        }
+
+        // 创建一个 GSAP timeline
+        const tl = gsap.timeline()
+
+        // 将每个选中的格子动画添加到时间轴中
+        selectedItems.forEach((item, index) => {
+          const isLast = index === selectedItems.length - 1
+          if (!isLast) {
+            tl.to(item, {
+              startAt: { backgroundColor: 'transparent' },
+              backgroundColor: 'yellow', // 设置目标背景颜色
+              duration: 0.4, // 动画持续时间
+              onStart: () => {
+                console.warn('播放音效')
+              },
+            }).to(item, {
+              backgroundColor: 'lightgray', // 恢复原始背景颜色
+              duration: 0.4, // 恢复时间
+              onComplete: () => {
+                if (isLast) {
+                  console.warn('弹中奖弹窗')
+                }
+              },
+            })
+          } else {
+            tl.to(item, {
+              startAt: { backgroundColor: 'transparent' },
+              backgroundColor: 'yellow', // 设置目标背景颜色
+              duration: 0.8, // 动画持续时间
+              onStart: () => {
+                console.warn('播放音效')
+              },
+              onComplete: () => {
+                console.warn('弹中奖弹窗')
+                // 动画完成后，重置标记
+                isSpinning = false
+              },
+            }).set(item, { backgroundColor: 'lightgray' }) // 保险恢复状态（防止中断）
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

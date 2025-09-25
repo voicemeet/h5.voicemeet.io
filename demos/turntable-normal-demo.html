@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>转盘</title>
+    <style>
+      .wheel-container {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 1px solid #666;
+        overflow: hidden;
+        margin: 20px auto;
+      }
+      .wheel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: center;
+      }
+      .gift-item {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .gift {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+      .pointer {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+      .btn-container {
+        display: flex;
+        justify-content: center;
+      }
+      .btn {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wheel-container">
+      <div class="wheel">
+        <div class="gift-item" style="transform: rotate(0deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(30deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(60deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(90deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(120deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(150deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(180deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(210deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(240deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(270deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(300deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+        <div class="gift-item" style="transform: rotate(330deg) translateY(-120px)">
+          <img class="gift" src="https://static.fenghuabl.cn/upload/202507/2/675831.png" />
+        </div>
+      </div>
+      <div class="pointer"></div>
+    </div>
+
+    <div class="btn-container"><button class="btn" id="spinBtn">开始转动</button></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+      let isSpinning = false // 用来标记转盘是否在转动
+
+      document.getElementById('spinBtn').addEventListener('click', function () {
+        if (isSpinning) return // 如果转盘正在转动，阻止点击
+        isSpinning = true // 开始转动
+
+        const totalGifts = 12 // 总共有12个礼物
+        const selectedGift = 3 // 设置需要停留的礼物位置，这里是礼物3
+        const anglePerGift = 360 / totalGifts // 每个礼物的角度
+
+        // 计算目标礼物的角度
+        const targetAngle = selectedGift * anglePerGift
+
+        // 至少转动2圈
+        const minRotation = 2 * 360
+
+        // 计算目标旋转角度（当前旋转+目标角度）
+        const totalRotation = minRotation + targetAngle
+
+        // 执行转动动画
+        gsap.to('.wheel', {
+          startAt: { rotation: 0 }, // 确保转盘从0开始旋转
+          rotation: totalRotation,
+          duration: 3,
+          ease: 'power1.inOut',
+          onStart: () => {
+            console.warn('onStart')
+          },
+          onComplete: () => {
+            console.warn('onComplete')
+            // 动画完成后，重置 rotation 为 0，并允许再次点击
+            gsap.set('.wheel', { rotation: 0, delay: 1 })
+            // 动画完成后，重置标记
+            isSpinning = false
+          },
+        })
+      })
+    </script>
+  </body>
+</html>
