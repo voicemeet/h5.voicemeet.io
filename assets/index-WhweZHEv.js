@@ -1,0 +1,1 @@
+import{b as e}from"./route-block-B_A1xBdJ.js";import{_ as t,a as n,o as c}from"./index-NvLtHfbn.js";const o={};function r(a,f){return c(),n("div",null,"turntable 3d")}typeof e=="function"&&e(o);const i=t(o,[["render",r]]);export{i as default};

@@ -1,5 +1,10 @@
 # frontend-h5
 
+> Meet the World through Voice.
+
+[![Test h5](https://github.com/voicemeet/releases/actions/workflows/test-h5.yml/badge.svg)](https://github.com/voicemeet/releases/actions/workflows/test-h5.yml)
+[![Release h5](https://github.com/voicemeet/releases/actions/workflows/release-h5.yml/badge.svg)](https://github.com/voicemeet/releases/actions/workflows/release-h5.yml)
+
 ## 准备
 
 > 需要 Node 版本 20+
