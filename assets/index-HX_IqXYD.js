@@ -1,0 +1,1 @@
+import{b as e}from"./route-block-B_A1xBdJ.js";import{_ as n,a as r,o as t}from"./index-lM4C43ca.js";const o={};function c(a,f){return t(),r("div",null,"dragon heart")}typeof e=="function"&&e(o);const i=n(o,[["render",c]]);export{i as default};

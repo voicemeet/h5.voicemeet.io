@@ -1,1 +1,0 @@
-import{z as e}from"./index-NvLtHfbn.js";function s(t){return e.post("/activity/event",{type:t})}function i(){return e.post("/gift/luckGiftList")}function o(t){return e.post("/activity/weekstar_users",t)}function n(t){return e.post("/activity/weekcontribution_users",t)}function u(t){return e.post("/activity/weekstar_rooms",t)}export{i as a,o as b,n as c,u as d,s as g};
