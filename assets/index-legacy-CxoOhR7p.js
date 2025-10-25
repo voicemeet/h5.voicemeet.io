@@ -1,1 +1,0 @@
-System.register(["./route-block-legacy-LtztSDKr.js","./index-legacy-DsUGtpk3.js"],function(e,t){"use strict";var n,r,u,c;return{setters:[e=>{n=e.b},e=>{r=e._,u=e.a,c=e.o}],execute:function(){const t={};"function"==typeof n&&n(t),e("default",r(t,[["render",function(e,t){return c(),u("div",null,"turntable")}]]))}}});
